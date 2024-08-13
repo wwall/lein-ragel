@@ -1,4 +1,4 @@
-(defproject lein-ragel "0.1.0"
+(defproject lein-ragel "0.1.1"
   :description "Leiningen plugin to compile Ragel source files."
   :url "http://github.com/llasram/lein-ragel"
   :license {:name "Eclipse Public License"

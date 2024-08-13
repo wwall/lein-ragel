@@ -12,7 +12,7 @@ within `dirs` modified since it was most recently compiled."
         ^File source (filter #(-> ^File % (.getName) (.endsWith ".rl"))
                              (file-seq (io/file dir)))
         :let [rel-source (.substring (.getPath source) (inc (count dir)))
-              rel-compiled (.substring rel-source 0 (- (count rel-source) 3))
+              rel-compiled (str (.substring rel-source 0 (- (count rel-source) 3)) ".java")
               compiled (io/file compile-path rel-compiled)]
         :when (>= (.lastModified source) (.lastModified compiled))]
     [source compiled]))
@@ -28,6 +28,7 @@ within `dirs` modified since it was most recently compiled."
   (.mkdirs (.getParentFile compiled))
   (let [command (ragel-command project args source compiled)
         {:keys [exit out err]} (apply sh/sh command)]
+;;    (main/info "run " command)
     (when-not (.isEmpty out) (print out))
     (when-not (.isEmpty err) (print err))
     (when-not (zero? exit)
